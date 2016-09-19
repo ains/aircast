@@ -32,3 +32,18 @@ sudo apt-get -yq install flac libflac-dev
 sudo pip install -r /vagrant/requirements.txt
 
 sudo apt-get -yq autoremove
+
+# Install supervisor to auto start Aircast
+sudo apt-get -yq install supervisor
+
+cat | sudo tee /etc/supervisor/conf.d/aircast.conf > /dev/null <<- EOM
+[program:aircast]
+command=python /vagrant/main.py --iface=eth1
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/aircast.err.log
+stdout_logfile=/var/log/aircast.out.log
+username=vagrant
+EOM
+
+sudo service supervisor restart
