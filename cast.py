@@ -28,8 +28,11 @@ class Caster:
     def start_stream(self):
         logger.info("Starting stream of URL %s on Chromecast '%s'",
                     self.stream_url, self.device_name)
+
+        self.chromecast.quit_app()
+
         mc = self.chromecast.media_controller
-        mc.play_media(self.stream_url, 'audio/flac')
+        mc.play_media(self.stream_url, 'audio/flac', stream_type="LIVE")
 
     @property
     def device_name(self):
