@@ -21,8 +21,10 @@ class MainHandler(tornado.web.RequestHandler):
         self.write(chunk)
         self.flush()
 
-    def on_finish(self):
+    def on_connection_close(self):
         self.broadcaster.remove_listener(self)
+
+    on_finish = on_connection_close
 
 
 def make_app(broadcaster):
