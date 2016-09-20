@@ -22,7 +22,7 @@ echo "options snd-hda-intel model=3stack" | sudo tee -a /etc/modprobe.d/alsa-bas
 git clone --depth=1 https://github.com/mikebrady/shairport-sync.git
 cd shairport-sync
 autoreconf -i -f
-./configure --with-alsa --with-avahi --with-ssl=openssl --with-metadata --with-soxr --with-systemv --with-stdout
+./configure --with-alsa --with-avahi --with-ssl=openssl --with-metadata --with-soxr --with-stdout
 make
 sudo make install
 
