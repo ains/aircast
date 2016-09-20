@@ -1,6 +1,7 @@
 import os
 import select
 import subprocess
+import sys
 import time
 import logging
 
@@ -52,14 +53,17 @@ class Shairport(StoppableThread):
                 '--name={}'.format(self.advertised_name)]
         logger.debug("Starting shairport-sync with command '%s'",
                      ''.join(args))
-        devnull = open('/dev/null', 'w')
-        p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=devnull)
+        p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=sys.stderr)
 
         idle_start_time = int(time.time())
         silence = True
         while True:
             if self.stopped():
                 break
+
+            p.poll()
+            if p.returncode is not None:
+                raise RuntimeError("shairport-sync exited unexpectedly.")
 
             r, w, e = select.select([p.stdout], [], [], 0)
             if p.stdout in r:
