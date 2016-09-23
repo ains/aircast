@@ -38,7 +38,7 @@ sudo apt-get -yq install supervisor
 
 cat | sudo tee /etc/supervisor/conf.d/aircast.conf > /dev/null <<- EOM
 [program:aircast]
-command=python /vagrant/main.py --iface=eth1
+command=python /vagrant/src/main.py --iface=eth1
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/aircast.err.log

@@ -1,9 +1,9 @@
+import logging
 import os
 import select
 import subprocess
 import sys
 import time
-import logging
 
 from common import StoppableThread
 
